@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitAndFuel — Free Fitness Webinar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
+<style>
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:         #F2F2F7;
+  --bg-card:    #FFFFFF;
+  --bg-grouped: #F2F2F7;
+  --bg-inset:   #E5E5EA;
+  --label:      #000000;
+  --label-2:    #3C3C43CC;
+  --label-3:    #3C3C4399;
+  --label-4:    #3C3C432E;
+  --sep:        #C6C6C8;
+  --sep-opaque: rgba(60,60,67,0.12);
+  --blue:       #007AFF;
+  --blue-dark:  #0062CC;
+  --green:      #34C759;
+  --red:        #FF3B30;
+  --tint:       #007AFF;
+}
+
+html {
+  scroll-behavior: smooth;
+  min-height: 100%;
+  height: auto;
+  overflow-y: auto;
+}
+
+body {
+  min-height: 100%;
+  font-family: 'Google Sans', 'Roboto', sans-serif;
+  background: var(--bg);
+  color: var(--label);
+  line-height: 1.5;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: auto;
+  touch-action: pan-y;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── SF SYMBOLS via inline SVG — no emojis anywhere ── */
+.sf {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ── MATERIAL ICONS ── */
+.material-icons-round {
+  font-size: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  vertical-align: middle;
+  user-select: none;
+}
+
+/* ── TYPOGRAPHY — iOS scale ── */
+.t-largetitle  { font-size: 34px; font-weight: 700; letter-spacing: 0.37px; line-height: 1.12; }
+.t-title1      { font-size: 28px; font-weight: 700; letter-spacing: 0.36px; line-height: 1.14; }
+.t-title2      { font-size: 22px; font-weight: 700; letter-spacing: 0.35px; line-height: 1.18; }
+.t-title3      { font-size: 20px; font-weight: 600; letter-spacing: 0.38px; }
+.t-headline    { font-size: 17px; font-weight: 600; letter-spacing: -0.41px; }
+.t-body        { font-size: 17px; font-weight: 400; letter-spacing: -0.41px; line-height: 1.53; }
+.t-callout     { font-size: 16px; font-weight: 400; letter-spacing: -0.32px; }
+.t-subhead     { font-size: 15px; font-weight: 400; letter-spacing: -0.24px; }
+.t-footnote    { font-size: 13px; font-weight: 400; letter-spacing: -0.08px; }
+.t-caption     { font-size: 12px; font-weight: 400; letter-spacing: 0px; }
+.t-caption2    { font-size: 11px; font-weight: 400; letter-spacing: 0.06px; }
+
+/* ── GROUPED TABLE — iOS settings style ── */
+.ios-group {
+  background: var(--bg-card);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 36px;
+}
+.ios-group-label {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--label-2);
+  letter-spacing: -0.08px;
+  text-transform: uppercase;
+  padding: 0 20px 6px;
+  margin-top: 36px;
+  margin-bottom: 0;
+}
+.ios-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 20px;
+  border-bottom: 0.5px solid var(--sep-opaque);
+  background: var(--bg-card);
+}
+.ios-row:last-child { border-bottom: none; }
+.ios-row-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.ios-row-body { flex: 1; min-width: 0; }
+.ios-row-title { font-size: 17px; font-weight: 400; letter-spacing: -0.41px; color: var(--label); }
+.ios-row-subtitle { font-size: 13px; color: var(--label-2); margin-top: 1px; }
+.ios-chevron { color: var(--label-3); margin-left: auto; flex-shrink: 0; }
+.ios-badge {
+  background: var(--bg-inset);
+  color: var(--label-2);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 20px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* ── BUTTONS ── */
+.btn-ios-primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  background: var(--blue);
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 14px;
+  font-size: 17px; font-weight: 600; letter-spacing: -0.41px;
+  border: none; cursor: pointer; text-decoration: none;
+  transition: background 0.15s, transform 0.1s;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-ios-primary:hover  { background: var(--blue-dark); }
+.btn-ios-primary:active { transform: scale(0.97); }
+
+.btn-ios-secondary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  background: var(--bg-card);
+  color: var(--blue);
+  padding: 14px 28px;
+  border-radius: 14px;
+  font-size: 17px; font-weight: 600; letter-spacing: -0.41px;
+  border: none; cursor: pointer; text-decoration: none;
+  transition: background 0.15s, transform 0.1s;
+}
+.btn-ios-secondary:hover  { background: var(--bg-inset); }
+.btn-ios-secondary:active { transform: scale(0.97); }
+
+.btn-ios-ghost {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  background: transparent;
+  color: var(--blue);
+  padding: 0;
+  font-size: 17px; font-weight: 400; letter-spacing: -0.41px;
+  border: none; cursor: pointer; text-decoration: none;
+}
+
+/* ── NAVBAR ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: 52px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px;
+  background: rgba(242,242,247,0.88);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 0.5px solid var(--sep);
+}
+.nav-logo {
+  font-family: 'Google Sans', 'Roboto', sans-serif;
+}
+.nav-logo span { color: var(--blue); }
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a { font-size: 15px; color: var(--blue); text-decoration: none; letter-spacing: -0.24px; }
+.nav-cta {
+  background: var(--blue); color: #fff;
+  font-size: 14px; font-weight: 600;
+  padding: 7px 16px; border-radius: 20px;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.nav-cta:hover { background: var(--blue-dark); }
+
+/* ── HERO — full-width image only ── */
+#hero {
+  margin-top: 52px;
+  width: 100%;
+  aspect-ratio: 21/9;
+  position: relative;
+  overflow: hidden;
+  background: #1C1C1E;
+}
+
+#about,
+#how,
+#pricing,
+#faq,
+#final-cta {
+  scroll-margin-top: 68px;
+}
+#hero img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  display: block;
+}
+#hero .hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 50%, transparent 100%);
+}
+#hero .hero-caption {
+  position: absolute;
+  bottom: 32px; left: 32px; right: 32px;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+}
+#hero .hero-caption-text h1 {
+  font-family: 'Google', -apple-system, sans-serif;
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+}
+#hero .hero-caption-text p {
+  font-size: 16px;
+  color: rgba(255,255,255,0.82);
+  margin-top: 6px;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+#hero .hero-cta {
+  flex-shrink: 0;
+}
+/* Fallback placeholder when no image is provided */
+#hero .hero-placeholder {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, #1C1C1E 0%, #2C2C2E 40%, #3A3A3C 100%);
+  display: flex; align-items: center; justify-content: center;
+}
+#hero .hero-placeholder svg { opacity: 0.15; }
+
+/* ── SOCIAL PROOF ── */
+#social {
+  background: var(--bg-card);
+  border-bottom: 0.5px solid var(--sep);
+}
+.social-inner {
+  max-width: 1080px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 28px 24px; gap: 16px; flex-wrap: wrap;
+}
+.social-stat { text-align: center; flex: 1; min-width: 80px; }
+.social-stat .num {
+  font-size: 28px; font-weight: 700; letter-spacing: 0.36px;
+  color: var(--label);
+}
+.social-stat .lbl {
+  font-size: 12px; color: var(--label-2);
+  letter-spacing: 0px; margin-top: 3px;
+}
+.social-divider { width: 0.5px; height: 40px; background: var(--sep); flex-shrink: 0; }
+.stars { font-size: 16px; letter-spacing: 1px; color: #FF9F0A; }
+.testimonials {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--sep);
+  border-top: 0.5px solid var(--sep);
+}
+.testimonial {
+  background: var(--bg-card);
+  padding: 24px;
+}
+.testimonial .quote {
+  font-size: 15px; line-height: 1.6;
+  color: var(--label); margin-bottom: 16px;
+}
+.testimonial .author { display: flex; align-items: center; gap: 10px; }
+.testimonial .avatar-circle {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--bg-inset);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.testimonial .author-info strong { font-size: 14px; font-weight: 600; display: block; }
+.testimonial .author-info span   { font-size: 12px; color: var(--label-2); }
+
+/* ── SECTIONS ── */
+.page-section { max-width: 1080px; margin: 0 auto; padding: 52px 24px; }
+.section-eyebrow {
+  font-size: 13px; font-weight: 500; color: var(--blue);
+  letter-spacing: -0.08px; margin-bottom: 6px;
+  text-transform: uppercase;
+}
+.section-heading {
+  font-size: clamp(26px, 3.5vw, 38px);
+  font-weight: 700; letter-spacing: -0.5px; line-height: 1.1;
+  color: var(--label); margin-bottom: 36px;
+}
+
+/* ── PROBLEM ── */
+.fail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--sep); border: 0.5px solid var(--sep); border-radius: 14px; overflow: hidden; }
+.fail-item {
+  background: var(--bg-card);
+  padding: 24px;
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.fail-icon-wrap {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: rgba(255,59,48,0.1);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.fail-item h3 { font-size: 16px; font-weight: 600; margin-bottom: 5px; color: var(--label); }
+.fail-item p  { font-size: 14px; color: var(--label-2); line-height: 1.55; }
+
+/* ── HOW IT WORKS ── */
+.steps-flow {
+  display: flex; flex-direction: column; gap: 0;
+  background: var(--bg-card);
+  border-radius: 14px; overflow: hidden;
+  border: 0.5px solid var(--sep);
+}
+.step-row {
+  display: flex; align-items: center; gap: 16px;
+  padding: 18px 20px;
+  border-bottom: 0.5px solid var(--sep-opaque);
+  position: relative;
+}
+.step-row:last-child { border-bottom: none; }
+.step-num-badge {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--blue);
+  color: #fff;
+  font-size: 14px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.step-row-icon {
+  width: 42px; height: 42px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.step-row h3  { font-size: 17px; font-weight: 500; letter-spacing: -0.41px; color: var(--label); }
+.step-row p   { font-size: 14px; color: var(--label-2); margin-top: 2px; }
+
+/* ── INCLUDED ── */
+.included-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--sep); border: 0.5px solid var(--sep); border-radius: 14px; overflow: hidden; }
+.included-card {
+  background: var(--bg-card);
+  padding: 24px 20px;
+}
+.included-icon-wrap {
+  width: 48px; height: 48px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 14px;
+}
+.included-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 7px; color: var(--label); }
+.included-card p  { font-size: 14px; color: var(--label-2); line-height: 1.55; }
+
+/* ── COACHES ── */
+#coaches-bg { background: var(--bg-card); border-top: 0.5px solid var(--sep); border-bottom: 0.5px solid var(--sep); }
+.coaches-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--sep); border: 0.5px solid var(--sep); border-radius: 14px; overflow: hidden; }
+.coach-card { background: var(--bg-card); }
+.coach-photo {
+  height: 200px; background: var(--bg-inset);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.coach-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  display: block;
+}
+.coach-exp-tag {
+  position: absolute; bottom: 12px; right: 12px;
+  background: rgba(0,0,0,0.55); backdrop-filter: blur(8px);
+  color: #fff; font-size: 12px; font-weight: 600;
+  padding: 4px 10px; border-radius: 20px;
+}
+.coach-info { padding: 18px 20px; }
+.coach-info h3  { font-size: 17px; font-weight: 700; color: var(--label); }
+.coach-spec     { font-size: 13px; color: var(--blue); font-weight: 500; margin: 3px 0 10px; }
+.coach-info p   { font-size: 14px; color: var(--label-2); line-height: 1.55; }
+.coach-certs    { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+.cert-tag {
+  background: var(--bg-inset); color: var(--label-2);
+  font-size: 12px; padding: 4px 10px; border-radius: 20px;
+}
+
+/* ── PRICING ── */
+.pricing-grid  { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.pricing-card  {
+  background: var(--bg-card);
+  border-radius: 16px; border: 0.5px solid var(--sep);
+  padding: 28px 22px;
+  display: flex; flex-direction: column;
+  position: relative; overflow: hidden;
+}
+.pricing-card.featured { border-color: var(--blue); border-width: 1.5px; }
+.featured-pill {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  background: var(--blue); color: #fff;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+  padding: 4px 16px; border-radius: 0 0 10px 10px;
+  text-transform: uppercase;
+}
+.pricing-card.featured .pt { padding-top: 20px; }
+.pricing-tier  { font-size: 13px; font-weight: 500; color: var(--label-2); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.pricing-price { font-size: 48px; font-weight: 700; letter-spacing: -1px; color: var(--label); line-height: 1; margin-bottom: 6px; }
+.pricing-price sup { font-size: 20px; vertical-align: super; font-weight: 600; letter-spacing: 0; }
+.pricing-desc  { font-size: 14px; color: var(--label-2); margin-bottom: 24px; line-height: 1.5; }
+.pricing-features { list-style: none; flex: 1; margin-bottom: 24px; display: flex; flex-direction: column; gap: 11px; }
+.pricing-features li { font-size: 15px; display: flex; align-items: center; gap: 10px; color: var(--label); }
+.pricing-features li .chk { color: var(--green); flex-shrink: 0; }
+.pricing-features li.dim { color: var(--label-3); }
+.pricing-features li.dim .chk { color: var(--label-4); }
+
+/* ── COMING SOON ── */
+#coming-bg { background: var(--bg); }
+.coming-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--sep); border: 0.5px solid var(--sep); border-radius: 14px; overflow: hidden; }
+.coming-item {
+  background: var(--bg-card);
+  padding: 20px;
+  display: flex; align-items: center; gap: 14px;
+}
+.coming-icon-wrap {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.coming-item h3 { font-size: 15px; font-weight: 600; color: var(--label); }
+.coming-item p  { font-size: 13px; color: var(--label-2); margin-top: 2px; }
+.coming-badge   {
+  margin-left: auto; flex-shrink: 0;
+  font-size: 11px; font-weight: 500; color: var(--label-2);
+  background: var(--bg-inset);
+  padding: 3px 9px; border-radius: 20px;
+}
+
+/* ── FAQ ── */
+.faq-list { display: flex; flex-direction: column; }
+.faq-item { background: var(--bg-card); border-bottom: 0.5px solid var(--sep-opaque); }
+.faq-item:first-child { border-radius: 14px 14px 0 0; }
+.faq-item:last-child  { border-bottom: none; border-radius: 0 0 14px 14px; }
+.faq-q {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 18px 20px; cursor: pointer;
+  font-size: 17px; font-weight: 400; letter-spacing: -0.41px; color: var(--label);
+  user-select: none;
+}
+.faq-toggle { color: var(--label-3); transition: transform 0.22s; flex-shrink: 0; margin-left: 16px; }
+.faq-a {
+  font-size: 15px; color: var(--label-2); line-height: 1.6;
+  max-height: 0; overflow: hidden;
+  transition: max-height 0.32s ease, padding 0.28s;
+  padding: 0 20px;
+}
+.faq-item.open .faq-a   { max-height: 300px; padding: 0 20px 18px; }
+.faq-item.open .faq-toggle { transform: rotate(45deg); }
+
+/* ── FINAL CTA ── */
+#final-cta {
+  text-align: center;
+  padding: 80px 24px 96px;
+}
+#final-cta h2 { font-size: clamp(32px, 5vw, 52px); font-weight: 700; letter-spacing: -0.5px; margin-bottom: 14px; }
+#final-cta > p  { font-size: 17px; color: var(--label-2); margin-bottom: 40px; max-width: 420px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+.cta-meta     { margin-top: 16px; font-size: 13px; color: var(--label-3); }
+
+/* ── RESERVATION FORM ── */
+.reserve-form {
+  max-width: 480px;
+  margin: 0 auto;
+  background: var(--bg);
+  border: 0.5px solid var(--sep);
+  border-radius: 20px;
+  padding: 32px 28px;
+  text-align: left;
+}
+.reserve-form-title {
+  font-size: 20px; font-weight: 700; letter-spacing: -0.4px;
+  color: var(--label); margin-bottom: 6px;
+}
+.reserve-form-sub {
+  font-size: 14px; color: var(--label-2); margin-bottom: 24px; line-height: 1.5;
+}
+.form-field { margin-bottom: 14px; }
+.form-field label {
+  display: block; font-size: 13px; font-weight: 500;
+  color: var(--label-2); margin-bottom: 6px; letter-spacing: -0.08px;
+}
+.form-field input,
+.form-field select {
+  width: 100%;
+  background: var(--bg-card);
+  border: 0.5px solid var(--sep);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 16px; font-family: inherit; color: var(--label);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  -webkit-appearance: none;
+}
+.form-field input:focus,
+.form-field select:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(0,122,255,0.12);
+}
+.form-field input::placeholder { color: var(--label-3); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-submit {
+  width: 100%; margin-top: 8px;
+  background: var(--blue); color: #fff;
+  border: none; border-radius: 12px;
+  padding: 15px 24px;
+  font-size: 17px; font-weight: 600; font-family: inherit;
+  cursor: pointer; letter-spacing: -0.41px;
+  transition: background 0.15s, transform 0.1s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.form-submit:hover  { background: var(--blue-dark); }
+.form-submit:active { transform: scale(0.98); }
+.form-success {
+  display: none; text-align: center; padding: 24px 0 8px;
+}
+.form-success .success-icon {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: rgba(52,199,89,0.12);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 14px;
+}
+.form-success h3 { font-size: 20px; font-weight: 700; margin-bottom: 6px; }
+.form-success p  { font-size: 15px; color: var(--label-2); line-height: 1.55; }
+@media (max-width: 520px) {
+  .reserve-form { padding: 24px 18px; }
+  .form-row { grid-template-columns: 1fr; }
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--bg-card);
+  border-top: 0.5px solid var(--sep);
+  padding: 32px 24px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 20px;
+}
+.footer-logo  { font-family: 'Google Sans', 'Roboto', sans-serif; font-size: 17px; font-weight: 700; color: var(--label); text-decoration: none; }
+.footer-logo span { color: var(--blue); }
+.footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+.footer-links a { font-size: 14px; color: var(--blue); text-decoration: none; }
+.footer-copy  { font-size: 12px; color: var(--label-3); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
+  nav { padding: 0 16px; }
+  .nav-links { display: none; }
+  #hero { aspect-ratio: 4/3; }
+  #hero .hero-caption { bottom: 20px; left: 20px; right: 20px; flex-direction: column; align-items: flex-start; gap: 14px; }
+  .social-inner  { padding: 20px 16px; }
+  .social-divider { display: none; }
+  .testimonials  { grid-template-columns: 1fr; }
+  .page-section  { padding: 40px 16px; }
+  .fail-grid     { grid-template-columns: 1fr; }
+  .included-grid { grid-template-columns: 1fr 1fr; }
+  .coaches-grid  { grid-template-columns: 1fr; }
+  .pricing-grid  { grid-template-columns: 1fr; }
+  .coming-grid   { grid-template-columns: 1fr 1fr; }
+  footer         { padding: 28px 16px; flex-direction: column; gap: 16px; text-align: center; }
+}
+@media (max-width: 520px) {
+  .included-grid { grid-template-columns: 1fr; }
+  .coming-grid   { grid-template-columns: 1fr; }
+}
+
+/* ── SCROLL REVEAL ── */
+.fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+
+/* ── SPINNER ── */
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#how">How it works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <a href="#final-cta" class="nav-cta">Join Free Webinar</a>
+</nav>
+
+<!-- HERO — full-width image, no text block, just image + caption overlay -->
+<section id="hero">
+  <img src="banner.png" alt="FitAndFuel — Fitness Webinar" onerror="this.style.display='none';document.getElementById('hero-fallback').style.display='flex'">
+  <div id="hero-fallback" style="display:none;width:100%;height:100%;position:absolute;inset:0;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 40%,#0f3460 70%,#1a1a2e 100%);align-items:center;justify-content:center;">
+    <span class="material-icons-round" style="font-size:80px;color:rgba(255,255,255,0.08);">fitness_center</span>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-caption">
+    <div class="hero-caption-text">
+      <h1>Transform Your Body.<br>Build Discipline.</h1>
+      <p>Fitness · Nutrition · Yoga · Accountability</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<div id="social">
+  <div class="social-inner">
+    <div class="social-stat">
+      <div class="stars">★★★★★</div>
+      <div class="lbl">Average rating</div>
+    </div>
+    <div class="social-divider"></div>
+    <div class="social-stat">
+      <div class="num">50+</div>
+      <div class="lbl">Transformations</div>
+    </div>
+    <div class="social-divider"></div>
+    <div class="social-stat">
+      <div class="num">95%</div>
+      <div class="lbl">Satisfaction</div>
+    </div>
+    <div class="social-divider"></div>
+    <div class="social-stat">
+      <div class="num">3</div>
+      <div class="lbl">Expert coaches</div>
+    </div>
+  </div>
+  <div style="max-width:1080px;margin:0 auto;">
+    <div class="testimonials fade-up">
+      <div class="testimonial">
+        <p class="quote">"I'd tried every gym and diet plan out there. Transform gave me something I never had — a system that actually fit my life, with coaches who actually cared."</p>
+        <div class="author">
+          <div class="avatar-circle">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8E8E93" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          </div>
+          <div class="author-info"><strong>Aisha M.</strong><span>Lost 22 kg in 90 days</span></div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <p class="quote">"The weekly accountability calls changed everything. I stopped trying to be consistent and just became consistent. The coaches hold you to a standard you start holding yourself to."</p>
+        <div class="author">
+          <div class="avatar-circle">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8E8E93" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          </div>
+          <div class="author-info"><strong>Daniel K.</strong><span>Gained 18 kg lean muscle</span></div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <p class="quote">"The yoga and nutrition work together in a way I didn't expect. I feel better at 42 than I did at 28. This webinar is where it all started — just show up."</p>
+        <div class="author">
+          <div class="avatar-circle">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8E8E93" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          </div>
+          <div class="author-info"><strong>Claire T.</strong><span>90-day programme graduate</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<div id="about" style="background:var(--bg);">
+  <div class="page-section fade-up">
+    <p class="section-eyebrow">The problem</p>
+    <h2 class="section-heading">Why most people<br>never transform</h2>
+    <div class="fail-grid">
+      <div class="fail-item">
+        <div class="fail-icon-wrap">
+          <span class="material-icons-round" style="color:#FF3B30;">person_off</span>
+        </div>
+        <div>
+          <h3>No real accountability</h3>
+          <p>Without someone checking in, motivation fades fast. Most people quit within two weeks of starting.</p>
+        </div>
+      </div>
+      <div class="fail-item">
+        <div class="fail-icon-wrap">
+          <span class="material-icons-round" style="color:#FF3B30;">layers_clear</span>
+        </div>
+        <div>
+          <h3>No coherent structure</h3>
+          <p>Random workouts and crash diets don't compound. You need a system where each week builds on the last.</p>
+        </div>
+      </div>
+      <div class="fail-item">
+        <div class="fail-icon-wrap">
+          <span class="material-icons-round" style="color:#FF3B30;">content_copy</span>
+        </div>
+        <div>
+          <h3>Generic, copy-paste plans</h3>
+          <p>One-size-fits-all PDFs ignore your body type, schedule, and goals. You deserve a plan built for you.</p>
+        </div>
+      </div>
+      <div class="fail-item">
+        <div class="fail-icon-wrap">
+          <span class="material-icons-round" style="color:#FF3B30;">help_outline</span>
+        </div>
+        <div>
+          <h3>No expert guidance when it matters</h3>
+          <p>YouTube can't tell you your form is off. Apps can't adjust when life gets complicated. Coaches can.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div id="how" style="background:var(--bg-card); border-top:0.5px solid var(--sep); border-bottom:0.5px solid var(--sep);">
+  <div class="page-section fade-up">
+    <p class="section-eyebrow">The process</p>
+    <h2 class="section-heading">Five steps to<br>a different body</h2>
+    <div class="steps-flow">
+      <div class="step-row">
+        <div class="step-num-badge">1</div>
+        <div class="step-row-icon" style="background:rgba(0,122,255,0.1);">
+          <span class="material-icons-round" style="color:#007AFF;font-size:22px;">videocam</span>
+        </div>
+        <div>
+          <h3>Attend the webinar</h3>
+          <p>30 minutes. Learn the full system and decide if it's right for you — zero pressure.</p>
+        </div>
+        <svg class="ios-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="#C7C7CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="step-row">
+        <div class="step-num-badge">2</div>
+        <div class="step-row-icon" style="background:rgba(52,199,89,0.1);">
+          <span class="material-icons-round" style="color:#34C759;font-size:22px;">play_circle</span>
+        </div>
+        <div>
+          <h3>Start 7-day trial</h3>
+          <p>Full access for one week. Real training, real nutrition, real support.</p>
+        </div>
+        <svg class="ios-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="#C7C7CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="step-row">
+        <div class="step-num-badge">3</div>
+        <div class="step-row-icon" style="background:rgba(255,159,10,0.1);">
+          <span class="material-icons-round" style="color:#FF9F0A;font-size:22px;">group</span>
+        </div>
+        <div>
+          <h3>Meet your coach</h3>
+          <p>A dedicated coach is assigned to you. They study your goals, history, and schedule.</p>
+        </div>
+        <svg class="ios-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="#C7C7CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="step-row">
+        <div class="step-num-badge">4</div>
+        <div class="step-row-icon" style="background:rgba(88,86,214,0.1);">
+          <span class="material-icons-round" style="color:#5856D6;font-size:22px;">tune</span>
+        </div>
+        <div>
+          <h3>Follow the system</h3>
+          <p>Daily workouts, nutrition, yoga, and weekly check-ins — everything integrated.</p>
+        </div>
+        <svg class="ios-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="#C7C7CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="step-row">
+        <div class="step-num-badge" style="background:var(--green);">5</div>
+        <div class="step-row-icon" style="background:rgba(52,199,89,0.1);">
+          <span class="material-icons-round" style="color:#34C759;font-size:22px;">verified</span>
+        </div>
+        <div>
+          <h3>Transform</h3>
+          <p>By week 12, clients report an average 14% body composition improvement.</p>
+        </div>
+        <svg class="ios-chevron" width="8" height="14" viewBox="0 0 8 14" fill="none"><path d="M1 1l6 6-6 6" stroke="#C7C7CC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHAT'S INCLUDED -->
+<div style="background:var(--bg);">
+  <div class="page-section fade-up">
+    <p class="section-eyebrow">Everything included</p>
+    <h2 class="section-heading">Six pillars.<br>One outcome.</h2>
+    <div class="included-grid">
+      <div class="included-card">
+        <div class="included-icon-wrap" style="background:rgba(0,122,255,0.1);">
+          <span class="material-icons-round" style="color:#007AFF;font-size:26px;">fitness_center</span>
+        </div>
+        <h3>Fitness coaching</h3>
+        <p>Periodised training plans built around your goals — strength, fat loss, endurance. Updated every 4 weeks.</p>
+      </div>
+      <div class="included-card">
+        <div class="included-icon-wrap" style="background:rgba(52,199,89,0.1);">
+          <span class="material-icons-round" style="color:#34C759;font-size:26px;">nutrition</span>
+        </div>
+        <h3>Nutrition planning</h3>
+        <p>Calorie and macro targets, meal frameworks, supplement guidance. Clarity without obsession.</p>
+      </div>
+      <div class="included-card">
+        <div class="included-icon-wrap" style="background:rgba(255,45,85,0.08);">
+          <span class="material-icons-round" style="color:#FF2D55;font-size:26px;">self_improvement</span>
+        </div>
+        <h3>Yoga coaching</h3>
+        <p>Mobility, recovery, and mental clarity. Weekly sessions that prevent injury and improve all-round performance.</p>
+      </div>
+      <div class="included-card">
+        <div class="included-icon-wrap" style="background:rgba(255,159,10,0.1);">
+          <span class="material-icons-round" style="color:#FF9F0A;font-size:26px;">phone_in_talk</span>
+        </div>
+        <h3>Weekly reviews</h3>
+        <p>A 30-minute call with your coach every week. Review what worked, address what didn't, reset targets.</p>
+      </div>
+      <div class="included-card">
+        <div class="included-icon-wrap" style="background:rgba(88,86,214,0.1);">
+          <span class="material-icons-round" style="color:#5856D6;font-size:26px;">bar_chart</span>
+        </div>
+        <h3>Progress tracking</h3>
+        <p>Body composition, performance benchmarks, and photo comparisons — all in one place.</p>
+      </div>
+      <div class="included-card">
+        <div class="included-icon-wrap" style="background:rgba(0,122,255,0.1);">
+          <span class="material-icons-round" style="color:#007AFF;font-size:26px;">groups</span>
+        </div>
+        <h3>Daily accountability</h3>
+        <p>Morning check-ins, group challenges, and a private community. You won't do this alone.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COACHES -->
+<div id="coaches-bg">
+  <div class="page-section fade-up">
+    <p class="section-eyebrow">The team</p>
+    <h2 class="section-heading">Coaches who've<br>done the work</h2>
+    <div class="coaches-grid">
+      <div class="coach-card">
+        <div class="coach-photo">
+          <img src="https://i.pinimg.com/736x/81/70/46/817046409a4aecc8bdf85907f27d8406.jpg" alt="Marcus Reid">
+          <span class="coach-exp-tag">10+ yrs</span>
+        </div>
+        <div class="coach-info">
+          <h3>Marcus Reid</h3>
+          <div class="coach-spec">Strength & Performance</div>
+          <p>Former competitive powerlifter turned coach. Marcus has guided 200+ athletes through complete physical overhauls using science-backed periodisation.</p>
+          <div class="coach-certs"><span class="cert-tag">NSCA-CSCS</span><span class="cert-tag">Precision Nutrition</span><span class="cert-tag">FMS Level 2</span></div>
+        </div>
+      </div>
+      <div class="coach-card">
+        <div class="coach-photo">
+          <img src="https://i.pinimg.com/736x/a6/17/b0/a617b066b5aaf1cbc007b96ecf35c44b.jpg" alt="Priya Nair">
+          <span class="coach-exp-tag">8 yrs</span>
+        </div>
+        <div class="coach-info">
+          <h3>Priya Nair</h3>
+          <div class="coach-spec">Yoga & Mindful Nutrition</div>
+          <p>500hr yoga teacher and registered dietitian. Priya bridges the gap between physical training and sustainable nutrition — making both stick long-term.</p>
+          <div class="coach-certs"><span class="cert-tag">RYT-500</span><span class="cert-tag">RD Registered</span><span class="cert-tag">Ayurvedic Nutrition</span></div>
+        </div>
+      </div>
+      <div class="coach-card">
+        <div class="coach-photo">
+          <img src="https://i.pinimg.com/webp/736x/2d/47/e4/2d47e4f5d9e47aef4e5e924b072dc1a2.webp" alt="James Okafor">
+          <span class="coach-exp-tag">12 yrs</span>
+        </div>
+        <div class="coach-info">
+          <h3>James Okafor</h3>
+          <div class="coach-spec">Cardio, Mobility & Mindset</div>
+          <p>Ex-professional runner and certified sports psychologist. James builds the mental resilience that keeps clients showing up when motivation runs dry.</p>
+          <div class="coach-certs"><span class="cert-tag">UKSCA</span><span class="cert-tag">Sports Psych Cert</span><span class="cert-tag">NASM-CPT</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div id="pricing" style="background:var(--bg);">
+  <div class="page-section fade-up">
+    <p class="section-eyebrow">Pricing</p>
+    <h2 class="section-heading">Start free.<br>Scale when ready.</h2>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-tier">Free Webinar</div>
+        <div class="pricing-price">£0</div>
+        <div class="pricing-desc">30 minutes. The full system, explained — no upsell pressure in the room.</div>
+        <ul class="pricing-features">
+          <li><svg class="chk" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Live session with all coaches</li>
+          <li><svg class="chk" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Full programme walkthrough</li>
+          <li><svg class="chk" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Q&A with the team</li>
+          <li><svg class="chk" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Transformation case studies</li>
+          <li class="dim"><svg class="chk" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/></svg>Personalised plan</li>
+          <li class="dim"><svg class="chk" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/></svg>Coach access</li>
+        </ul>
+        <a href="#final-cta" class="btn-ios-secondary" style="width:100%;">Register now</a>
+      </div>
+      <div class="pricing-card featured">
+        <span class="featured-pill">Most popular</span>
+        <div class="pt">
+          <div class="pricing-tier">7-Day Trial</div>
+          <div class="pricing-price"><sup>£</sup>199</div>
+          <div class="pricing-desc">Full access. Real coaching. Cancel before day 7 for a full refund.</div>
+        </div>
+        <ul class="pricing-features">
+          <li><svg class="chk" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Dedicated coach assigned</li>
+          <li><svg class="chk" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Custom training plan</li>
+          <li><svg class="chk" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Nutrition framework</li>
+          <li><svg class="chk" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>2× coaching calls</li>
+          <li><svg class="chk" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Progress tracking</li>
+          <li><svg class="chk" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Community access</li>
+        </ul>
+        <a href="#final-cta" class="btn-ios-primary" style="width:100%;">Start 7-day trial</a>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-tier">90-Day Transformation</div>
+        <div class="pricing-price"><sup>£</sup>2,709</div>
+        <div class="pricing-desc">The complete programme. Full commitment, full coaching, full results.</div>
+        <ul class="pricing-features">
+          <li><svg class="chk" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Everything in trial</li>
+          <li><svg class="chk" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Weekly 1:1 coaching calls</li>
+          <li><svg class="chk" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Body composition analysis</li>
+          <li><svg class="chk" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Yoga coaching sessions</li>
+          <li><svg class="chk" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Nutrition meal planning</li>
+          <li><svg class="chk" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Post-programme review</li>
+        </ul>
+        <a href="#final-cta" class="btn-ios-secondary" style="width:100%;">Apply now</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMING SOON -->
+<div id="coming-bg" style="background:var(--bg-card); border-top:0.5px solid var(--sep); border-bottom:0.5px solid var(--sep);">
+  <div class="page-section fade-up">
+    <p class="section-eyebrow">Coming soon</p>
+    <h2 class="section-heading">The future of<br>personalised fitness</h2>
+    <div class="coming-grid">
+      <div class="coming-item">
+        <div class="coming-icon-wrap" style="background:rgba(0,122,255,0.1);">
+          <span class="material-icons-round" style="color:#007AFF;font-size:24px;">smart_toy</span>
+        </div>
+        <div><h3>AI Coach</h3><p>24/7 instant guidance between sessions</p></div>
+        <span class="coming-badge">Q3 2026</span>
+      </div>
+      <div class="coming-item">
+        <div class="coming-icon-wrap" style="background:rgba(52,199,89,0.1);">
+          <span class="material-icons-round" style="color:#34C759;font-size:24px;">smartphone</span>
+        </div>
+        <div><h3>Mobile App</h3><p>Track, log, and connect on the go</p></div>
+        <span class="coming-badge">Q3 2026</span>
+      </div>
+      <div class="coming-item">
+        <div class="coming-icon-wrap" style="background:rgba(255,159,10,0.1);">
+          <span class="material-icons-round" style="color:#FF9F0A;font-size:24px;">document_scanner</span>
+        </div>
+        <div><h3>Smart Nutrition</h3><p>Scan meals, get instant macro feedback</p></div>
+        <span class="coming-badge">Q4 2026</span>
+      </div>
+      <div class="coming-item">
+        <div class="coming-icon-wrap" style="background:rgba(88,86,214,0.1);">
+          <span class="material-icons-round" style="color:#5856D6;font-size:24px;">task_alt</span>
+        </div>
+        <div><h3>Habit Tracker</h3><p>Daily rituals that compound over time</p></div>
+        <span class="coming-badge">Q4 2026</span>
+      </div>
+      <div class="coming-item">
+        <div class="coming-icon-wrap" style="background:rgba(255,59,48,0.08);">
+          <span class="material-icons-round" style="color:#FF3B30;font-size:24px;">local_fire_department</span>
+        </div>
+        <div><h3>Streak System</h3><p>Gamified consistency with rewards</p></div>
+        <span class="coming-badge">Q4 2026</span>
+      </div>
+      <div class="coming-item">
+        <div class="coming-icon-wrap" style="background:rgba(52,199,89,0.1);">
+          <span class="material-icons-round" style="color:#34C759;font-size:24px;">analytics</span>
+        </div>
+        <div><h3>AI Reports</h3><p>Weekly AI-generated body analysis</p></div>
+        <span class="coming-badge">2027</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div id="faq" style="background:var(--bg);">
+  <div class="page-section fade-up" style="max-width:720px;">
+    <p class="section-eyebrow">FAQ</p>
+    <h2 class="section-heading">Questions we<br>hear every week</h2>
+    <div class="faq-list" style="border:0.5px solid var(--sep); border-radius:14px; overflow:hidden;">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What happens at the webinar?<span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div>
+        <div class="faq-a">It's a live 30-minute session with all three coaches. We walk through the Transform system, share real client case studies, and answer questions. There's no sales pitch — just clarity on whether this is the right fit for you.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Do I need to be fit to start?<span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div>
+        <div class="faq-a">Absolutely not. We work with complete beginners through to experienced athletes. Your plan is built around where you are right now, not where we wish you were. Many of our best transformation stories started from zero.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">How much time do I need each day?<span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div>
+        <div class="faq-a">The minimum effective dose is 45–60 minutes of training per day, 5 days a week. Yoga sessions are 20–30 minutes. Your coach will work around your real schedule, not an ideal one.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What if the 7-day trial isn't right for me?<span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div>
+        <div class="faq-a">Cancel within 7 days and you receive a full refund — no questions, no forms, no hassle. We're confident in the product, so we make the decision easy for you.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Can I do this from anywhere in the world?<span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div>
+        <div class="faq-a">Yes. All coaching is delivered remotely via video calls, an online portal, and messaging. You can train at home or in a gym. We have clients across 18 countries.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">What makes this different from other programmes?<span class="faq-toggle"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span></div>
+        <div class="faq-a">Most programmes sell you a plan and disappear. We sell you a coaching relationship. You get a real human being who knows your name, your history, and your goals — and who will notice if you've gone quiet for three days.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FINAL CTA + RESERVATION FORM -->
+<div style="background:var(--bg-card); border-top:0.5px solid var(--sep);">
+  <section id="final-cta">
+    <p style="font-size:13px;font-weight:500;color:var(--blue);letter-spacing:-0.08px;text-transform:uppercase;margin-bottom:10px;">The next step is yours</p>
+    <h2>Ready to transform?</h2>
+    <p>Join our free 30-minute webinar and discover exactly how the Transform system works — before you spend a single penny.</p>
+
+    <div class="reserve-form fade-up">
+      <div class="reserve-form-title">Reserve your free seat</div>
+      <div class="reserve-form-sub">Takes 30 seconds · Free to attend · Live with Q&A</div>
+
+      <div id="reserveFormBody">
+        <div class="form-row">
+          <div class="form-field">
+            <label for="rf-first">First name</label>
+            <input type="text" id="rf-first" placeholder="Alex" autocomplete="given-name">
+          </div>
+          <div class="form-field">
+            <label for="rf-last">Last name</label>
+            <input type="text" id="rf-last" placeholder="Johnson" autocomplete="family-name">
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="rf-email">Email address</label>
+          <input type="email" id="rf-email" placeholder="alex@example.com" autocomplete="email">
+        </div>
+        <div class="form-field">
+          <label for="rf-phone">Phone (optional)</label>
+          <input type="tel" id="rf-phone" placeholder="+44 7700 900000" autocomplete="tel">
+        </div>
+        <div class="form-field">
+          <label for="rf-goal">Your primary goal</label>
+          <select id="rf-goal">
+            <option value="" disabled selected>Select a goal…</option>
+            <option>Lose body fat</option>
+            <option>Build muscle & strength</option>
+            <option>Improve overall fitness</option>
+            <option>Better nutrition habits</option>
+            <option>Flexibility & mobility</option>
+            <option>General wellbeing</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="rf-session">Preferred session</label>
+          <select id="rf-session">
+            <option value="" disabled selected>Choose a time slot…</option>
+            <option>Monday 18 Aug · 7:00 PM BST</option>
+            <option>Wednesday 20 Aug · 12:00 PM BST</option>
+            <option>Saturday 23 Aug · 10:00 AM BST</option>
+            <option>Monday 25 Aug · 7:00 PM BST</option>
+          </select>
+        </div>
+        <button class="form-submit" onclick="submitReserve()">
+          <span class="material-icons-round" style="font-size:20px;">event_available</span>
+          Reserve my free seat
+        </button>
+        <p id="reserve-error" style="color:var(--red);font-size:13px;margin-top:10px;display:none;text-align:center;">Please fill in your name, email, goal and session.</p>
+      </div>
+
+      <div class="form-success" id="reserveSuccess">
+        <div class="success-icon">
+          <span class="material-icons-round" style="color:#34C759;font-size:30px;">check_circle</span>
+        </div>
+        <h3>You're in!</h3>
+        <p>Check your inbox — we've sent your confirmation and webinar link. See you there.</p>
+      </div>
+    </div>
+
+    <p class="cta-meta" style="margin-top:28px;">No credit card · No obligation · Cancel anytime</p>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">Fit<span>And</span>Fuel</a>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Contact</a>
+    <a href="#">Instagram</a>
+  </div>
+  <span class="footer-copy">© 2026 FitAndFuel. All rights reserved.</span>
+</footer>
+
+<script>
+/* ── LENIS SMOOTH SCROLL ── */
+const lenis = window.Lenis ? new Lenis({
+  autoRaf: true,
+  lerp: 0.1,
+  smoothWheel: false,
+  syncTouch: false,
+}) : null;
+
+/* Anchor links → lenis scroll */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const href = a.getAttribute('href');
+    if (href === '#') return;
+    const target = document.querySelector(href);
+    if (target) {
+      e.preventDefault();
+      const top = target.getBoundingClientRect().top + window.scrollY - 58;
+      window.scrollTo({ top, behavior: 'smooth' });
+      history.pushState(null, '', href);
+    }
+  });
+});
+
+/* ── FAQ ── */
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+/* ── SCROLL REVEAL ── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+/* ── RESERVATION FORM ── */
+const webinarSlotUtc = [
+  '2026-08-18T18:00:00Z',
+  '2026-08-20T11:00:00Z',
+  '2026-08-23T09:00:00Z',
+  '2026-08-25T18:00:00Z'
+];
+
+function getVisitorTimeZone() {
+  try {
+    return Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+  } catch (_) {
+    return 'UTC';
+  }
+}
+
+function formatSessionOptions() {
+  const options = document.querySelectorAll('#rf-session option:not([disabled])');
+  const formatter = new Intl.DateTimeFormat(undefined, {
+    weekday: 'long',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    timeZoneName: 'short'
+  });
+
+  options.forEach((option, index) => {
+    const startUtc = webinarSlotUtc[index];
+    if (!startUtc) return;
+    const label = formatter.format(new Date(startUtc));
+    option.dataset.startUtc = startUtc;
+    option.value = label;
+    option.textContent = label;
+  });
+}
+
+formatSessionOptions();
+
+function submitReserve() {
+  const first   = document.getElementById('rf-first').value.trim();
+  const last    = document.getElementById('rf-last').value.trim();
+  const email   = document.getElementById('rf-email').value.trim();
+  const goal    = document.getElementById('rf-goal').value;
+  const session = document.getElementById('rf-session').value;
+  const err     = document.getElementById('reserve-error');
+
+  if (!first || !last || !email || !goal || !session) {
+    err.style.display = 'block';
+    return;
+  }
+  err.style.display = 'none';
+
+  sendRegistration({ first, last, email, goal, session, timezone: getVisitorTimeZone() });
+}
+
+function sendRegistration(payload) {
+  const err = document.getElementById('reserve-error');
+  const submitBtn = document.querySelector('.form-submit');
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span class="material-icons-round" style="font-size:20px;">autorenew</span> Reserving...';
+  }
+
+  fetch('/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(r => {
+    if (!r.ok) throw new Error('Registration failed');
+    return r.json();
+  })
+  .then(data => {
+    document.getElementById('reserveFormBody').style.display = 'none';
+    document.getElementById('reserveSuccess').style.display  = 'block';
+  })
+  .catch(() => {
+    err.textContent = 'Something went wrong. Please try again in a moment.';
+    err.style.display = 'block';
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<span class="material-icons-round" style="font-size:20px;">event_available</span> Reserve my free seat';
+    }
+  });
+}
+</script>
+</body>
+</html>
